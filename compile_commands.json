@@ -1,0 +1,14 @@
+[
+    {
+        "arguments": [
+            "g++",
+            "-c",
+            "-I./inc",
+            "-o",
+            "./target/process.o",
+            "src/process.cpp"
+        ],
+        "directory": "/home/gdjs2/repository/Memtracker",
+        "file": "src/process.cpp"
+    }
+]

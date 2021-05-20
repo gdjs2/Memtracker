@@ -10,6 +10,20 @@ int main() {
 			(*it)->memory_size, (*it)->rss_size,
 			(*it)->shared_size, (*it)->text_size,
 			(*it)->data_size);
+		if ((*it)->thread_vector->size() != 1
+			|| (*it)->thread_vector->at(0)->tid != (*it)->pid) {
+
+				thrd_vector *thread_vector = (*it)->thread_vector;
+				for (thrd_vector_iter it = thread_vector->begin(); it != thread_vector->end(); ++it) {
+					printf("|____%u\t%c\t%8lu\t%8lu\t%8lu\t%8lu\t%8lu\n",
+						(*it)->tid, (*it)->state,
+						(*it)->memory_size, (*it)->rss_size,
+						(*it)->shared_size, (*it)->text_size,
+						(*it)->data_size);
+				}
+
+
+			}
 	}
 	return 0;
 }

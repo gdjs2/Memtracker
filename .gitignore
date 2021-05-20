@@ -32,3 +32,5 @@
 *.app
 
 target
+.cache
+*clangd

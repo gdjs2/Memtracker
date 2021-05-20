@@ -8,9 +8,12 @@
 #include <dirent.h>
 
 struct process;
+struct thread;
 
 typedef std::vector<process*> proc_vector;
+typedef std::vector<thread*> thrd_vector;
 typedef std::vector<process*>::iterator proc_vector_iter;
+typedef std::vector<thread*>::iterator thrd_vector_iter;
 
 struct process {
 	uint32_t pid;
@@ -23,6 +26,20 @@ struct process {
 
 	char state;
 	char *pname = new char[50];
+	
+	thrd_vector* thread_vector;
+};
+
+struct thread {
+	uint32_t tid;
+
+	uint64_t memory_size,
+		 rss_size,
+		 shared_size,
+		 text_size, 
+		 data_size;
+	
+	char state;
 };
 
 /** To get all the processes stored in a vector. 
@@ -30,5 +47,6 @@ struct process {
  *  the processes.
  **/
 proc_vector* get_all_processes();
+thrd_vector* get_all_threads(int pid);
 
 #endif
