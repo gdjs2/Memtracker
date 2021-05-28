@@ -50,11 +50,19 @@ proc_vector* get_all_processes() {
 		sprintf(statm_file_name, "/proc/%s/statm", entry->d_name);
 
 		FILE* stat_fp = fopen(stat_file_name, "r");
+		if (!stat_fp) {
+			delete proc;
+			continue;
+		}
 		fscanf(stat_fp, "%d %s %c", &proc->pid, proc->pname, &proc->state);
 		fclose(stat_fp);
 
 		// TODO, Here just read the memory usage in page.
 		FILE* statm_fp = fopen(statm_file_name, "r");
+		if (!statm_fp) {
+			delete proc;
+			continue;
+		}
 		fscanf(statm_fp, "%lu %lu %lu %lu %*u %lu",
 			&proc->memory_size,
 			&proc->rss_size,
@@ -105,10 +113,18 @@ thrd_vector* get_all_threads(int pid) {
 		sprintf(statm_file_name, "%s/%s/statm", dir_name, entry->d_name);
 
 		stat_fp = fopen(stat_file_name, "r");
+		if (!stat_fp) {
+			delete thrd;
+			continue;
+		}
 		fscanf(stat_fp, "%d %*s %c", &thrd->tid, &thrd->state);
 		fclose(stat_fp);
 
 		statm_fp = fopen(statm_file_name, "r");
+		if (!statm_fp) {
+			delete thrd;
+			continue;
+		}
 		fscanf(statm_fp, "%lu %lu %lu %lu %*u %lu",
 					&thrd->memory_size,
 					&thrd->rss_size,
