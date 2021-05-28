@@ -6,6 +6,8 @@
 #include <vector>
 #include <sys/types.h>
 #include <dirent.h>
+#include <fstream>
+
 
 struct process;
 
@@ -25,10 +27,19 @@ struct process {
 	char *pname = new char[50];
 };
 
+struct memory{
+    uint64_t memTotal,
+    memFree,
+    MemAvailable,
+    Buffers,
+    Cached;    
+};
+
 /** To get all the processes stored in a vector. 
  *  Return the pointer of the vector storing all
  *  the processes.
  **/
 proc_vector* get_all_processes();
+memory* get_memory_info();
 
 #endif
