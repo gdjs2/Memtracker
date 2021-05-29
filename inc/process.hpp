@@ -60,5 +60,6 @@ proc_vector* get_all_processes();
 thrd_vector* get_all_threads(int pid);
 void delete_process_vec(proc_vector*);
 memory* get_memory_info();
+void sort_mem_vector(proc_vector* vec, int sort_method);
 
 #endif
