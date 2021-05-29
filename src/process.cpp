@@ -46,8 +46,6 @@ proc_vector* get_all_processes() {
 
 		process* proc = new process();
 
-		char* stat_file_name = new char[255 + 20];
-		char* statm_file_name = new char[255 + 20];
 		sprintf(stat_file_name, "/proc/%s/stat", entry->d_name);
 		sprintf(statm_file_name, "/proc/%s/statm", entry->d_name);
 
