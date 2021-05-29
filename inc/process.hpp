@@ -6,6 +6,8 @@
 #include <vector>
 #include <sys/types.h>
 #include <dirent.h>
+#include <fstream>
+
 
 struct process;
 struct thread;
@@ -42,6 +44,14 @@ struct thread {
 	char state;
 };
 
+struct memory{
+    uint64_t memTotal,
+    memFree,
+    MemAvailable,
+    Buffers,
+    Cached;    
+};
+
 /** To get all the processes stored in a vector. 
  *  Return the pointer of the vector storing all
  *  the processes.
@@ -49,5 +59,6 @@ struct thread {
 proc_vector* get_all_processes();
 thrd_vector* get_all_threads(int pid);
 void delete_process_vec(proc_vector*);
+memory* get_memory_info();
 
 #endif
