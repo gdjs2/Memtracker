@@ -27,7 +27,7 @@ struct process {
 	char state;
 	char *pname = new char[50];
 	
-	thrd_vector* thread_vector;
+	thrd_vector* thread_vector = NULL;
 };
 
 struct thread {
@@ -48,5 +48,6 @@ struct thread {
  **/
 proc_vector* get_all_processes();
 thrd_vector* get_all_threads(int pid);
+void delete_process_vec(proc_vector*);
 
 #endif

@@ -103,7 +103,6 @@ thrd_vector* get_all_threads(int pid) {
 		sprintf(statm_file_name, "%s/%s/statm", dir_name, entry->d_name);
 
 		stat_fp = fopen(stat_file_name, "r");
-		printf("%s\n", stat_file_name);
 		fscanf(stat_fp, "%d %*s %c", &thrd->tid, &thrd->state);
 		fclose(stat_fp);
 
@@ -119,10 +118,29 @@ thrd_vector* get_all_threads(int pid) {
 		vec->push_back(thrd);
 		
 	}
-	
+
+	closedir(dp);
 	delete[] dir_name;
 	delete[] stat_file_name;
 	delete[] statm_file_name;
 
 	return vec;
+}
+
+void delete_process_vec(proc_vector* vec) {
+	for (proc_vector_iter it = vec->begin(); it != vec->end(); it++) {
+		thrd_vector *thread_vector = (*it)->thread_vector;
+		if (thread_vector != NULL) {
+			// for (int i = 0; i < thread_vector->size(); ++i) delete thread_vector->at(i);
+			for (thrd_vector_iter thrd_it = thread_vector->begin(); thrd_it != thread_vector->end(); ++thrd_it) {
+				// printf("Delete thread 0x%lx\n", (unsigned long)*thrd_it);
+				delete *thrd_it;
+			}
+			delete (*it)->thread_vector;
+		}
+		
+		delete[] (*it)->pname;
+		delete (*it);
+	}
+	delete vec;
 }
