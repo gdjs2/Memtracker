@@ -9,7 +9,7 @@ test_get_all_process: create_dir process.o test_get_all_process.o
 create_dir:
 	test -d target || mkdir target
 
-memory_watch:
+memory_watch: process.o main.o
 	g++ $(INC_FLAG) ./target/process.o ./target/main.o -o ./target/memory_watch -lcurses -pthread
 
 process.o:
@@ -24,7 +24,7 @@ multi_thread_program: create_dir
 main.o:
 	g++ $(INC_FLAG) -c ./src/main.cpp -lcurses -pthread -o ./target/main.o
 
-run:
+run: ./src/main.cpp process.o 
 	g++ $(INC_FLAG) -c ./src/main.cpp -lcurses -pthread -o ./target/main.o
 	g++ $(INC_FLAG) ./target/process.o ./target/main.o -o ./target/memory_watch -lcurses -pthread
 	./target/memory_watch
